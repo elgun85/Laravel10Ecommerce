@@ -12,7 +12,7 @@
                                     <h5 class="card-header">Profile Details</h5>
 
                                     <div class="card-body">
-                                        <form id="formAccountSettings" action="{{route('category.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return false">
+                                        <form id="formAccountSettings" action="{{route('category.store')}}" method="POST" enctype="multipart/form-data" >
                                             @csrf
                                             <!-- Account -->
                                             <div class="card-body">
@@ -60,7 +60,7 @@
                                                 </div>--}}
                                                 <div class="mb-3 col-md-6">
                                                     <label for="status" class="form-label">Status</label><br>
-                                                    <input type="checkbox" name="status" id="status">
+                                                    <input type="checkbox" name="status" id="status" value="">
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">

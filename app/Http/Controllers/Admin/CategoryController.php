@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryCreateRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -26,9 +29,29 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
-        //
+        if ($request->hasFile('image'))
+        {
+            $fileName=str::limit(Str::slug($request->name),10).'_'.rand(99991,9999999).'.'.$request->image->extension();
+            $fileUpload='uploads/category/'.$fileName;
+            $request->image->move(public_path('uploads/category'),$fileName);
+            $request->merge([
+                'image'=>$fileUpload
+            ]);
+        }
+
+        $request->merge([
+            'slug' => Str::slug($request->name)
+        ]);
+
+        $request->merge([
+            'status' => $request->status==true?'1':'0'
+        ]);
+
+        Category::create($request->post());
+
+        return redirect()->route('category.index')->with('message','Data added Successfully');
     }
 
     /**
