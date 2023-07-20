@@ -103,6 +103,13 @@
                     </ul>
                 </li>
 
+                <li class="menu-item @if( Request::segment(2)=='brand' ) active open @endif">
+                    <a href="{{route('brand.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-crown"></i>
+                        <div data-i18n="Boxicons">Brands</div>
+                    </a>
+                </li>
+
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Pages</span>
                 </li>

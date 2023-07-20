@@ -1,28 +1,42 @@
 @extends('backend.layouts.master')
-@section('title','Category create')
+@section('title','Category edit')
 @section('content')
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Category /</span> Category Create
+                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Category /</span> Category edit
                         <a href="{{route('category.index')}}" class="btn rounded-pill btn-danger btn-sm float-end"> &nbsp;Back</a>
                     </h4>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-4">
-                                    {{--<h5 class="card-header">Profile Details</h5>--}}
+                                   {{-- <h5 class="card-header">Profile Details</h5>--}}
 
                                     <div class="card-body">
-                                        <form id="formAccountSettings" action="{{route('category.store')}}" method="POST" enctype="multipart/form-data" >
+                                        <form id="formAccountSettings" action="{{route('category.update',$category->id)}}" method="POST" enctype="multipart/form-data" >
                                             @csrf
+                                            @method('PUT')
                                             <!-- Account -->
                                             <div class="card-body">
                                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
 
-                                                    <img class="rounded float-start" id="preview-image-before-upload" src=""
-                                                         style="max-height: 150px;max-width: 150px;" >
+
+                                                   {{-- <div class="button-wrapper">--}}
+
                                                     <div class="button-wrapper">
-                                                        <label for="image" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                                            <span class="d-none d-sm-block">Select  photo</span>
+                                                        @if($category->image)
+                                                        <label for="image" class=" me-2 mb-4" tabindex="0">
+                                                            <span class="d-none d-sm-block">
+                                                                @else
+                                                                    <label for="image" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                                    <span class="d-none d-sm-block">Select  photo</span>
+                                                                </label>
+                                                                @endif
+                                                                <img class="rounded float-start"
+                                                                     id="preview-image-before-upload"
+                                                                     src="@if($category->image) {{asset($category->image)}} @endif"
+                                                                       style="max-height: 150px;max-width: 150px;" >
+                                                            </span>
+
                                                             <i class="bx bx-upload d-block d-sm-none"></i>
                                                             <input
                                                                 type="file"
@@ -33,10 +47,9 @@
                                                                 accept="image/png, image/jpeg"
                                                             />
                                                         </label>
-
-
                                                         <p class="text-muted mb-0">Allowed Jpg,Jpeg or Png. Max size of 3072K</p>
                                                     </div>
+
                                                 </div>
                                             </div>
                                             <hr class="my-0 mb-3" />
@@ -48,8 +61,7 @@
                                                         type="text"
                                                         id="name"
                                                         name="name"
-                                                        placeholder="Name"
-                                                        value="{{old('name')}}"
+                                                        value="{{$category->name}}"
                                                         autofocus
                                                     />
                                                     @error('name') <smal class="text-danger">{{$message}}</smal> @enderror
@@ -61,30 +73,30 @@
                                                 </div>--}}
                                                 <div class="mb-3 col-md-6">
                                                     <label for="status" class="form-label">Status</label><br>
-                                                    <input type="checkbox" name="status" id="status" value="">
+                                                    <input type="checkbox" name="status" id="status" {{$category->status ==1 ?'checked' : '' }} >
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">
                                                     <label for="meta_title" class="form-label">Meta title</label>
-                                                    <input class="form-control" type="text" name="meta_title" id="meta_title" value="{{old('meta_title')}}" placeholder="Meta title" />
+                                                    <input class="form-control" type="text" name="meta_title" id="meta_title" value="{{$category->meta_title}}" />
                                                     @error('meta_title') <smal class="text-danger">{{$message}}</smal> @enderror
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">
                                                     <label for="meta_keyword" class="form-label">Meta_keyword</label>
-                                                    <input class="form-control" type="text" name="meta_keyword" id="meta_keyword" value="{{old('meta_keyword')}}" placeholder="Meta keyword" />
+                                                    <input class="form-control" type="text" name="meta_keyword" id="meta_keyword" value="{{$category->meta_keyword}}" />
                                                     @error('meta_keyword') <smal class="text-danger">{{$message}}</smal> @enderror
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">
                                                     <label for="meta_description" class="form-label">Meta_description</label>
-                                                    <textarea id="meta_description" class="form-control" name="meta_description" value="{{old('meta_description')}}" id="" rows="3">{{old('meta_description')}}</textarea>
+                                                    <textarea id="meta_description" class="form-control" name="meta_description" id="" rows="3">{{$category->meta_description}}</textarea>
                                                     @error('meta_description') <smal class="text-danger">{{$message}}</smal> @enderror
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">
                                                     <label for="description" class="form-label">Description</label>
-                                                    <textarea id="description" class="form-control" name="description" id="description" value="{{old('description')}}" rows="3">{{old('description')}}</textarea>
+                                                    <textarea id="description" class="form-control" name="description" id="description" rows="3">{{$category->description}}</textarea>
                                                     @error('description') <smal class="text-danger">{{$message}}</smal> @enderror
                                                 </div>
 
