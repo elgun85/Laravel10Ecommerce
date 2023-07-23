@@ -37,14 +37,18 @@
                                         <td>{{$brand->slug}}</td>
                                         <td><span class="badge bg-label-{{$brand->status== '1'? 'primary':'danger'}} me-1">{{$brand->status== '1'? 'Hidden':'Visible'}}</span></td>
                                         <td>
-                                            <a href="{{route('brand.edit',$brand->id)}}" class="btn btn-outline-primary btn-sm mr-3 ml-3" >
+                                            <a href="#" wire:click="editBrand({{$brand->id}})"
+                                               data-bs-toggle="modal" data-bs-target="#updateBrandModal"
+                                               class="btn btn-outline-primary btn-sm " >
                                                 <i class='bx bx-edit-alt'></i>
 
 
-                                                <a href="#" wire:click="deletebrand({{$brand->id}})"
-                                                   class="btn btn-outline-danger btn-sm"
-                                                   data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                <a href="#" wire:click="deleteBrand({{$brand->id}})"
+                                                   class="btn btn-outline-danger btn-sm "
+                                                   data-bs-toggle="modal" data-bs-target="#deleteBrandModal"
+{{--
                                                      onclick="return confirm('Are you sure,you want to delete this data?')"
+--}}
                                                 >  <i class='bx bx-trash'></i></a></a>
                                         </td>
                                     </tr>
@@ -80,6 +84,8 @@
         <script>
             window.livewire.on('close-modal',event => {
                 $('#createModal').modal('hide');
+                $('#updateBrandModal').modal('hide');
+                $('#deleteBrandModal').modal('hide');
             });
         </script>
     @endsection
