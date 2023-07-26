@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ProductController;
 
 
 /*
@@ -47,6 +48,7 @@ Route::prefix('back')->middleware(['auth','isAdmin'])->group(function ()
 
     Route::resource('category',CategoryController::class);
     Route::resource('brand',BrandController::class);
+    Route::resource('product',ProductController::class);
 
 
 

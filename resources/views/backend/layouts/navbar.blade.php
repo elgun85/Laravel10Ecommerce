@@ -109,6 +109,12 @@
                         <div data-i18n="Boxicons">Brands</div>
                     </a>
                 </li>
+                <li class="menu-item @if( Request::segment(2)=='product' ) active open @endif">
+                    <a href="{{route('product.index')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                        <div data-i18n="Boxicons">Product</div>
+                    </a>
+                </li>
 
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Pages</span>

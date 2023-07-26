@@ -26,5 +26,6 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 @livewireScripts
 @yield('scripts')
+
 </body>
 </html>

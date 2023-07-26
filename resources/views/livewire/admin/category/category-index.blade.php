@@ -104,11 +104,5 @@
         </script>
     @endsection
 </div>
-{{--@push('scripts')
-    <script>
-        window.addEventListener('close-modal', event =>{
-            $('#deleteModal').modal('hide');
-        });
-    </script>
-@endpush--}}
+
 
