@@ -55,6 +55,9 @@ Route::prefix('back')->middleware(['auth','isAdmin'])->group(function ()
 
 
     Route::get('CategoryDel/{id}',[CategoryController::class,'delete'])->name('category.delete');
+    Route::get('ProductImageDel/{id}',[ProductController::class,'ProductImageDel'])->name('product.ProductImageDel');
+    Route::get('ProductDel/{id}',[ProductController::class,'delete'])->name('product.delete');
+
 
 
 

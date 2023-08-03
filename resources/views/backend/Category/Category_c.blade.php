@@ -61,7 +61,7 @@
                                                 </div>--}}
                                                 <div class="mb-3 col-md-6">
                                                     <label for="status" class="form-label">Status</label><br>
-                                                    <input type="checkbox" name="status" id="status" value="">
+                                                    <input type="checkbox" name="status" id="status">
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">

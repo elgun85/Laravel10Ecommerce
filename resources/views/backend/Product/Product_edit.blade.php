@@ -1,11 +1,22 @@
 @extends('backend.layouts.master')
-@section('title','Product create')
+@section('title','Product update')
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Category /</span> @yield('title')
                 <a href="{{route('product.index')}}" class="btn rounded-pill btn-danger btn-sm float-end"> &nbsp;Back</a>
             </h4>
+            @if(session('message'))
+                <div class="alert alert-primary alert-dismissible mt-3" role="alert">
+                    {{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger alert-dismissible mt-3" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
@@ -18,9 +29,11 @@
                                 </div>
                             @endif
 
-                            <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('product.update',$products->id)}}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @method('PUT')
+
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
                                 </li>
@@ -40,31 +53,24 @@
                                     <div class="form-group mb-3">
                                         <label for="exampleFormControlCategory" class="form-label">Category</label>
                                         <select class="form-select" id="exampleFormControlCategory" name="category_id">
-                                            {{-- <option value="0"  selected>Open this Category menu</option>--}}
                                             @foreach($categories as $category)
-                                                @if (old('category_id') == $category->id)
-                                                    <option value="{{$category->id}}"selected>{{$category->name}}</option>
-                                                @else
-                                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                                @endif
+                                                <option value="{{$category->id}}"  {{$category->id == $products->category_id ? 'selected':''}}>
+
+                                                    {{$category->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="exampleFormControlName" class="form-label">Name</label>
-                                        <input id="exampleFormControlName" type="text" name="name" placeholder="Name" class="form-control" value="{{old('name')}}">
+                                        <input id="exampleFormControlName" type="text" name="name"  class="form-control" value="{{$products->name}}">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="exampleFormControlBrand" class="form-label">Brand</label>
                                         <select name="brand" id="exampleFormControlBrand" class="form-select">
-                                            {{-- <option value="0"  selected>Open this Brands menu</option>--}}
                                             @foreach($brands as $brand)
-                                                @if (old('brand') == $brand->id)
-                                                    <option value="{{$brand->name}}"selected>{{$brand->name}}</option>
-                                                @else
-                                                    <option value="{{$brand->name}}">{{$brand->name}}</option>
-                                                @endif
+                                                <option value="{{$brand->name}}" {{$brand->name == $products->brand ? 'selected':''}}>
+                                                    {{$brand->name}}</option>
                                             @endforeach
 
                                         </select>
@@ -72,12 +78,12 @@
 
                                     <div class="form-group  mb-3">
                                         <label for="Description" class="form-label">Description</label>
-                                        <textarea id="Description" class="form-control" name="description" id="" rows="3">{{old('description')}}</textarea>
+                                        <textarea id="Description" class="form-control" name="description" id="" rows="3">{{$products->description}}</textarea>
                                     </div>
 
                                     <div class="form-group  mb-3">
                                         <label for="Small_description" class="form-label">Small_description</label>
-                                        <textarea id="Small_description" class="form-control" name="small_description" id="" rows="3">{{old('small_description')}}</textarea>
+                                        <textarea id="Small_description" class="form-control" name="small_description" id="" rows="3">{{$products->small_description}}</textarea>
                                     </div>
 
                                 </div>
@@ -85,17 +91,17 @@
                                 <div class="tab-pane fade border p-3" id="seotag" role="tabpanel" aria-labelledby="seotag-tab">
                                     <div class="form-group mb-3">
                                         <label for="meta_title" class="form-label">Meta_title</label>
-                                        <input id="meta_title" type="text" name="meta_title" placeholder="meta_title" class="form-control" value="{{old('meta_title')}}">
+                                        <input id="meta_title" type="text" name="meta_title" placeholder="meta_title" class="form-control" value="{{$products->meta_title}}">
                                     </div>
 
                                     <div class="form-group  mb-3">
                                         <label for="meta_keyword" class="form-label">Meta_keyword</label>
-                                        <textarea id="meta_keyword" class="form-control" name="meta_keyword" id="" rows="3">{{old('meta_keyword')}}</textarea>
+                                        <textarea id="meta_keyword" class="form-control" name="meta_keyword" id="" rows="3">{{$products->meta_keyword}}</textarea>
                                     </div>
 
                                     <div class="form-group  mb-3">
                                         <label for="meta_description" class="form-label">Meta_description</label>
-                                        <textarea id="meta_description" class="form-control" name="meta_description" id="" rows="3">{{old('meta_description')}}</textarea>
+                                        <textarea id="meta_description" class="form-control" name="meta_description" id="" rows="3">{{$products->meta_description}}</textarea>
                                     </div>
                                 </div>
                                               {{--Details--}}
@@ -104,35 +110,37 @@
                                         <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="original_price" class="form-label">Original_price</label>
-                                                <input id="original_price" type="number" name="original_price" placeholder="original_price" class="form-control" value="{{old('original_price')}}">
+                                                <input id="original_price" type="number" name="original_price"  class="form-control" value="{{$products->original_price}}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="selling_price" class="form-label">Selling_price</label>
-                                                <input id="selling_price" type="number" name="selling_price" placeholder="selling_price" class="form-control" value="{{old('selling_price')}}">
+                                                <input id="selling_price" type="number" name="selling_price"  class="form-control" value="{{$products->selling_price}}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="quantity" class="form-label">Quantity</label>
-                                                <input id="quantity" type="number" name="quantity" placeholder="quantity" class="form-control" value="{{old('quantity')}}">
+                                                <input id="quantity" type="number" name="quantity" class="form-control" value="{{$products->quantity}}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="trending" class="form-label">Trending</label>
-                                                <input id="trending" type="checkbox" name="trending" style="width: 50px;height: 50px">
+                                                <input id="trending" type="checkbox" name="trending" style="width: 50px;height: 50px"
+                                                    {{$products->trending  =='1'? 'checked':''}}>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="status" class="form-label">Status</label>
-                                                <input id="status" type="checkbox" name="status" style="width: 50px;height: 50px">
+                                                <input id="status" type="checkbox" name="status" style="width: 50px;height: 50px"
+                                                    {{$products->status  =='1'? 'checked':''}}>
                                             </div>
                                         </div>
                                     </div>
@@ -146,10 +154,28 @@
                                         <input type="file" class="form-control"  name="image[]" multiple placeholder="Choose image" id="image">
 
                                     </div>
+                                    {{--<livewire:admin.product-image.image: id="15" >--}}
+                                    <div class="">
+                                        @if($products->productImages)
+                                           <div class="row">
+                                               @foreach($products->productImages as $image)
+                                                   <div class="col-md-1">
+                                                       <img src="{{asset($image->image)}}" style="width: 80px;height: 80px" alt="img" class="me-4 border">
+                                                       <a href="{{route('product.ProductImageDel',$image->id)}}" class="d-block  btn-outline-danger align text-center">
+                                                           <i class='bx bx-x-circle bx bxs-like bx-md' ></i>
+                                                           {{--<i class='bx bxs-x-circle bx bxs-like bx-lg'></i>--}}
+                                                       </a>
+                                                   </div>
+                                               @endforeach
+                                           </div>
+                                        @else
+                                            <h4> No added image</h4>
+                                        @endif
+                                    </div>
 
                                 </div>
                                 <div class="d-grid gap-2 col-6 mx-auto">
-                                    <button type="submit" class="btn btn-outline-primary btn-sm float-end btn-rounded mt-3"> Save</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm float-end btn-rounded mt-3"> Update</button>
                                 </div>
                             </form>
                         </div>

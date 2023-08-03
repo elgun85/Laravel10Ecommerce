@@ -30,4 +30,15 @@ class Product extends Model
             'meta_description',
             'image'
         ];
+
+    public  function category()
+    {
+        return $this->belongsTo(Category::class,'category_id','id');
+    }
+
+
+    public function productImages()
+    {
+        return $this->hasMany(Product_Image::class,'product_id','id');
+    }
 }
