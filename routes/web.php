@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
-
+use App\Http\Controllers\Admin\ColorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +49,7 @@ Route::prefix('back')->middleware(['auth','isAdmin'])->group(function ()
     Route::resource('category',CategoryController::class);
     Route::resource('brand',BrandController::class);
     Route::resource('product',ProductController::class);
+    Route::resource('color',ColorController::class);
 
 
 
@@ -56,6 +57,7 @@ Route::prefix('back')->middleware(['auth','isAdmin'])->group(function ()
 
     Route::get('CategoryDel/{id}',[CategoryController::class,'delete'])->name('category.delete');
     Route::get('ProductImageDel/{id}',[ProductController::class,'ProductImageDel'])->name('product.ProductImageDel');
+    Route::get('ColorDel/{id}',[ColorController::class,'delete'])->name('color.delete');
     Route::get('ProductDel/{id}',[ProductController::class,'delete'])->name('product.delete');
 
 

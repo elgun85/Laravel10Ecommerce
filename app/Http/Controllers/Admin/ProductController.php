@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductFormRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\Product_Image;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class ProductController extends Controller
     {
         $categories=Category::all();
         $brands=Brand::all();
-        return view('backend.Product.Product_create',compact('categories','brands'));
+        $colors=Color::where('status',0)->get();
+        return view('backend.Product.Product_create',compact('categories','brands','colors'));
     }
 
     /**

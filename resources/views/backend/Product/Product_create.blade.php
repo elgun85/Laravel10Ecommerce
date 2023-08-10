@@ -33,6 +33,9 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" type="button" role="tab" aria-controls="image" aria-selected="false">Image</button>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color" type="button" role="tab" aria-controls="color" aria-selected="false">Colors</button>
+                                </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                                     {{--home--}}
@@ -139,15 +142,36 @@
                                 </div>
                                 {{--Image--}}
                                 <div class="tab-pane fade border p-3" id="image" role="tabpanel" aria-labelledby="image-tab">
-
-
                                     <div class="form-group mb-3">
                                         <label for="image" class="form-label">Image</label>
                                         <input type="file" class="form-control"  name="image[]" multiple placeholder="Choose image" id="image">
-
                                     </div>
-
                                 </div>
+
+                                {{--Colors--}}
+                                <div class="tab-pane fade border p-3" id="color" role="tabpanel" aria-labelledby="color-tab">
+                                    <label for=""><b>Select Color</b></label>
+                                    <hr>
+
+
+                                    <div class="row ">
+                                       @forelse($colors as $colorItem)
+                                            <div class="col-md-3">
+                                                <div class="p-2 border mb-3">
+
+                                                  Color:  <input type="checkbox" class="form-check-input"  name="color[]" multiple  id="color" value="{{$colorItem->id}}" > <b style="color: {{$colorItem->code}}">{{$colorItem->name}}</b>
+                                                    <br>
+                                                    Quantity: <input type="number" name="quantity[]" style="width: 70px;border: 1px solid">
+                                                </div>
+                                            </div>
+                                        @empty
+
+                                        @endforelse
+                                    </div>
+                                </div>
+
+
+
                                 <div class="d-grid gap-2 col-6 mx-auto">
                                     <button type="submit" class="btn btn-outline-primary btn-sm float-end btn-rounded mt-3"> Save</button>
                                 </div>
