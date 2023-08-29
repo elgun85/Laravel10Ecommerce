@@ -92,9 +92,26 @@
                         </div>
                     </div>
 
-{{--                        @foreach($categories as $category)
+                    @if(Request::segment(1)!='login')
+                        @foreach($kat as $category)
                             <a href="{{route('product',$category->slug)}}" class="nav-item nav-link">{{$category->name}}</a>
-                        @endforeach--}}
+                        @endforeach
+                    @endif
+
+
+
+{{--
+                    @if(Request::segment(0)=='login' )
+<h1>salam</h1>
+      --}}
+{{--
+@foreach($kat as $category)
+                            <a href="{{route('product',$category->slug)}}" class="nav-item nav-link">{{$category->name}}</a>
+                        @endforeach
+                        --}}{{--
+
+                    @endif
+--}}
 
 
                 </div>

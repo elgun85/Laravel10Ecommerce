@@ -126,7 +126,8 @@ class ProductController extends Controller
     {
 
         $validateData=$request->validated();
-          $product=Category::findOrFail($validateData['category_id'])->product()->where('id',$id)->first()  ;
+      //    $product=Category::findOrFail($validateData['category_id'])->product()->where('id',$id)->first()  ;
+          $product=Product::findOrFail($id)  ;
         if ($product)
         {
             $request->merge([

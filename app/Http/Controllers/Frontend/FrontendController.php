@@ -9,17 +9,22 @@ use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
+/*    public function __construct()
+    {
+       $this->kat=Category::where('status',0)->paginate(8);
+    }*/
+
     public function index()
     {
         $Sliders=Slider::where('status',0)->get();
-        $categories=Category::where('status',0)->paginate(8);
+        $kat=Category::where('status',0)->paginate(8);
 
-        return view('frontend.index',compact('Sliders','categories'));
+        return view('frontend.index',compact('Sliders','kat'));
     }
 
     public function product($category_slug)
     {
-        $categories=Category::where('status',0)->paginate(8);
+        $kat=Category::where('status',0)->paginate(8);
 
         $cat=Category::where('slug',$category_slug)->first();
         if ($cat)
@@ -30,7 +35,7 @@ class FrontendController extends Controller
             return redirect()->back();
         }
 
-        return view('frontend.product',compact('categories','products','cat'));
+        return view('frontend.product',compact('kat','products','cat'));
 
     }
 

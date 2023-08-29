@@ -11,6 +11,17 @@
 
 
                         <div class="form-group">
+                            <label for="category_id">Category </label>
+                            <select id="category_id" wire:model.defer="category_id" class="form-select" aria-label="Default select example">
+                                <option selected>-- Select Category --</option>
+                                @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id') <smal id="category_idHelp" class="form-text  text-danger">{{$message}}</smal> @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="name">Name </label>
                             <input type="text" wire:model.defer="name" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter Name">
                             @error('name') <smal id="nameHelp" class="form-text  text-danger">{{$message}}</smal> @enderror
@@ -59,6 +70,17 @@
                 @if($this->name )
             <form wire:submit.prevent="updateBrand({{$brand->id}})">
                 <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="category_id">Category </label>
+                        <select id="category_id" wire:model.defer="category_id" class="form-select" aria-label="Default select example">
+                            <option selected>-- Select Category --</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id') <smal id="category_idHelp" class="form-text  text-danger">{{$message}}</smal> @enderror
+                    </div>
 
                     <div class="form-group">
                         <label for="name">Name </label>

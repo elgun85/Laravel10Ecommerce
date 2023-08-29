@@ -39,7 +39,7 @@ Auth::routes();
 
 Route::get('/', [FrontendController::class, 'index'])->name('homepage');
 Route::get('/{category_slug}', [FrontendController::class, 'product'])->name('product');
-Route::get('/{category_slug}/{product_view}', [FrontendController::class, 'product_view'])->name('product_view');
+Route::get('/cat/{cat_slug}/{prod_view}', [FrontendController::class, 'product_view'])->name('product_view');
 /*Route::get('/category', [FrontendController::class, 'category'])->name('category');*/
 
 

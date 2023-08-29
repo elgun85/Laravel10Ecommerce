@@ -24,6 +24,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Slug</th>
+                                    <th>Category</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -35,6 +36,13 @@
                                             <strong>{{$brand->name}}</strong></td>
 
                                         <td>{{$brand->slug}}</td>
+                                        <td>
+                                        @if($brand->category)
+                                        {{$brand->category->name}}
+                                        @else
+                                               <span  style="color: darkred"> No Category</span>
+                                            @endif
+                                        </td>
                                         <td><span class="badge bg-label-{{$brand->status== '1'? 'primary':'danger'}} me-1">{{$brand->status== '1'? 'Hidden':'Visible'}}</span></td>
                                         <td>
                                             <a href="#" wire:click="editBrand({{$brand->id}})"
