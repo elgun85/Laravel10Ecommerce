@@ -79,8 +79,18 @@
                                         <tr>
                                             <td>{{$color->id}}</td>
                                             <td>{{$color->name}}</td>
-                                            <td style="color: {{$color->code}}">{{$color->code}}</td>
-                                            <td>{{$color->status == '1'? 'Hidden':'Visible'}}</td>
+                                            @if($color->name=='white')
+                                                <td>
+                                                    <span class="badge rounded-pill" style="background-color: {{$color->code}}"><b style="color: #0f0f0f">{{$color->code}}</b></span>
+                                                </td>
+
+
+                                            @else
+                                                <td>
+                                                    <span class="badge rounded-pill" style="background-color: {{$color->code}}"><b >{{$color->code}}</b></span>
+                                                </td>
+
+                                            @endif                                            <td>{{$color->status == '1'? 'Hidden':'Visible'}}</td>
                                             <td>
                                                 <a href="{{route('color.edit',$color->id)}}" class="btn btn-outline-primary btn-sm" ><i class='bx bx-edit-alt'></i></a>
                                                 <a href="{{route('color.delete',$color->id)}}" class="btn btn-outline-danger btn-sm"

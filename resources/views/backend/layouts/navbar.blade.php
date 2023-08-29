@@ -124,6 +124,21 @@
                     </a>
                 </li>
 
+                <li class="menu-item @if( Request::segment(2)=='slider' ) active open @endif">
+                    <a href="{{route('slider.index')}}" class="menu-link">
+                        <i class='menu-icon tf-icons bx bx-slider-alt'></i>
+                        <div data-i18n="Boxicons">Slider</div>
+                    </a>
+                </li>
+
+
+                <li class="menu-item @if( Request::segment(2)=='test' ) active open @endif">
+                    <a href="{{route('test')}}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                        <div data-i18n="Boxicons">Test</div>
+                    </a>
+                </li>
+
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Pages</span>
                 </li>

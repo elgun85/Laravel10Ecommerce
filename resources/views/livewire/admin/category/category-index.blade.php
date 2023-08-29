@@ -23,6 +23,7 @@
                                     <th>Name</th>
                                     <th>Image</th>
                                     <th>Status</th>
+                                    <th>Order</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -40,6 +41,8 @@
 
                                         </td>
                                         <td><span class="badge bg-label-{{$category->status== '1'? 'primary':'danger'}} me-1">{{$category->status== '1'? 'Hidden':'Visible'}}</span></td>
+                                        <td>{{$category->order}}</td>
+
                                         <td>
                                             <a href="{{route('category.edit',$category->id)}}" class="btn btn-outline-primary btn-sm mr-3 ml-3" >
                                                 <i class='bx bx-edit-alt'></i>

@@ -75,7 +75,18 @@
                                         <tr>
                                             <td>{{$color->id}}</td>
                                             <td>{{$color->name}}</td>
-                                            <td style="color: {{$color->code}}">{{$color->code}}</td>
+                                            @if($color->name=='white')
+                                                <td>
+                                                    <span class="badge rounded-pill" style="background-color: {{$color->code}}"><b style="color: #0f0f0f">{{$color->code}}</b></span>
+                                                </td>
+
+
+                                            @else
+                                                <td>
+                                                    <span class="badge rounded-pill" style="background-color: {{$color->code}}"><b >{{$color->code}}</b></span>
+                                                </td>
+
+                                            @endif
 
                                             <td>{{$color->status == '1'? 'Hidden':'Visible'}}</td>
                                             <td>

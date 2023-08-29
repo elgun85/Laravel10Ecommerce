@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,15 +28,19 @@ use App\Http\Controllers\Admin\ColorController;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('frontend.index');
-});
+});*/
 
+Route::get('/', [FrontendController::class, 'index'])->name('homepage');
+Route::get('/{category_slug}', [FrontendController::class, 'product'])->name('product');
+Route::get('/{category_slug}/{product_view}', [FrontendController::class, 'product_view'])->name('product_view');
+/*Route::get('/category', [FrontendController::class, 'category'])->name('category');*/
 
 
                                 /*Backend*/
@@ -50,6 +57,7 @@ Route::prefix('back')->middleware(['auth','isAdmin'])->group(function ()
     Route::resource('brand',BrandController::class);
     Route::resource('product',ProductController::class);
     Route::resource('color',ColorController::class);
+    Route::resource('slider',SliderController::class);
 
 
 
@@ -59,6 +67,8 @@ Route::prefix('back')->middleware(['auth','isAdmin'])->group(function ()
     Route::get('ProductImageDel/{id}',[ProductController::class,'ProductImageDel'])->name('product.ProductImageDel');
     Route::get('ColorDel/{id}',[ColorController::class,'delete'])->name('color.delete');
     Route::get('ProductDel/{id}',[ProductController::class,'delete'])->name('product.delete');
+    Route::get('SliderDel/{id}',[SliderController::class,'delete'])->name('slider.delete');
+    Route::get('test_1',[ProductController::class,'test'])->name('test');
 
 
 

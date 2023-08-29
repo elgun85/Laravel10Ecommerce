@@ -15,6 +15,7 @@ class Category extends Model
         [
             'name',
             'slug',
+            'order',
             'description',
             'image',
             'meta_title',

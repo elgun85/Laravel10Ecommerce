@@ -33,6 +33,7 @@
             <th>Brand</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Colors</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -46,6 +47,18 @@
                 <td>{{$product->brand}}</td>
                 <td>{{$product->selling_price}}</td>
                 <td>{{$product->quantity}}</td>
+                <td>
+@foreach($product->ProductColor as $proc)
+    @if($proc->color->name=='white' or $proc->color->name=='White')
+                            <span  title="{{$proc->color->name}}" class="badge rounded-pill shadow " style="background-color: {{$proc->color->code}}"><b style="color: #0f0f0f">{{$proc->Color_quantity}}</b></span>
+                        @else
+                            <span title="{{$proc->color->name}}" class="badge rounded-pill " style="background-color: {{$proc->color->code}}">{{$proc->Color_quantity}}</span>
+
+                        @endif
+                    @endforeach
+
+
+                </td>
                 <td>{{$product->status == '1'? 'Hidden':'Visible'}}</td>
                 <td>
                     <a href="{{route('product.edit',$product->id)}}" class="btn btn-outline-primary btn-sm" ><i class='bx bx-edit-alt'></i></a>
@@ -64,6 +77,8 @@
     </table>
     {{--Table finish--}}
 </div>
+                    {{$products->links('pagination::bootstrap-4')}}
+
                 </div>
 
 

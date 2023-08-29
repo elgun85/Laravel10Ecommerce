@@ -74,6 +74,20 @@ class ProductController extends Controller
                 }
             }
 
+            if($request->colors)
+            {
+                foreach ($request->colors as $key=>$color)
+                {
+                    //dd($request->colors);
+                    $product->ProductColor()->create([
+                        'product_id'=>$product->id,
+                        'color_id'=>$color,
+                        'Color_quantity'=>$request->Color_quantity[$key] ?? 0
+                    ]);
+                }
+
+            }
+
 
             return redirect()->route('product.index')->with('message','Product ' .$product->name.'   added Successfully');
         }
@@ -100,7 +114,9 @@ class ProductController extends Controller
         $categories=Category::get();
         $brands=Brand::get();
         $products=Product::findOrFail($id);
-        return view('backend.Product.Product_edit',compact('categories','brands','products'));
+        $productColors=$products->ProductColor->pluck('color_id')->toArray();
+        $colors=Color::whereNotIn('id',$productColors)->get();
+        return view('backend.Product.Product_edit',compact('categories','brands','products','colors'));
     }
 
     /**
@@ -108,13 +124,9 @@ class ProductController extends Controller
      */
     public function update(ProductFormRequest $request, string $id)
     {
-     //   return dd($request->post());
-//return $id;
 
         $validateData=$request->validated();
-//dd($request->post());
           $product=Category::findOrFail($validateData['category_id'])->product()->where('id',$id)->first()  ;
-   //   return $product=Product::findOrFail($id);
         if ($product)
         {
             $request->merge([
@@ -144,6 +156,20 @@ class ProductController extends Controller
                         'image'       =>$finalImagePathName,
                     ]);
                 }
+            }
+
+            if($request->colors)
+            {
+                foreach ($request->colors as $key=>$color)
+                {
+                    //dd($request->colors);
+                    $product->ProductColor()->create([
+                        'product_id'=>$product->id,
+                        'color_id'=>$color,
+                        'Color_quantity'=>$request->Color_quantity[$key] ?? 0
+                    ]);
+                }
+
             }
 
 
@@ -204,5 +230,11 @@ class ProductController extends Controller
 
 
 
+    }
+
+
+    public function test(){
+
+      return  view('backend.test');
     }
 }

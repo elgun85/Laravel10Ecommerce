@@ -159,12 +159,22 @@
                                             <div class="col-md-3">
                                                 <div class="p-2 border mb-3">
 
-                                                  Color:  <input type="checkbox" class="form-check-input"  name="color[]" multiple  id="color" value="{{$colorItem->id}}" > <b style="color: {{$colorItem->code}}">{{$colorItem->name}}</b>
+
+                                                  Color:  <input type="checkbox" class="form-check-input"  name="colors[{{$colorItem->id}}]" multiple  id="color" value="{{$colorItem->id}}" >
+                                                        @if($colorItem->name == 'white' or $colorItem->name =='White')
+                                                        <b style="color: #0f0f0f">{{$colorItem->name}}</b>
+                                                    @else
+                                                        <b style="color: {{$colorItem->code}}">{{$colorItem->name}}</b>
+                                                    @endif
+
                                                     <br>
-                                                    Quantity: <input type="number" name="quantity[]" style="width: 70px;border: 1px solid">
+                                                    Quantity: <input type="number" name="Color_quantity[{{$colorItem->id}}]"  style="width: 70px;border: 1px solid">
                                                 </div>
                                             </div>
                                         @empty
+                                           <div class="col-md-12">
+                                               <h2>No colors Found</h2>
+                                           </div>
 
                                         @endforelse
                                     </div>

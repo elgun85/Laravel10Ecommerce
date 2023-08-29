@@ -11,19 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
-            $table->string('order');
-            $table->mediumText('description');
+            $table->mediumText('description')->nullable();
             $table->string('image')->nullable();
-
-            $table->string('meta_title');
-            $table->string('meta_keyword');
-            $table->mediumText('meta_description');
-
-            $table->tinyInteger('status')->default('0')->comment('0=visible,1=hidden');
+            $table->tinyInteger('status')->default('0')->comment('1=hidden,0=visible');
             $table->timestamps();
         });
     }
@@ -33,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('sliders');
     }
 };

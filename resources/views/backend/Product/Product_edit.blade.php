@@ -6,7 +6,7 @@
             <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Category /</span> @yield('title')
                 <a href="{{route('product.index')}}" class="btn rounded-pill btn-danger btn-sm float-end"> &nbsp;Back</a>
             </h4>
-            @if(session('message'))
+            @if(session()->has('message'))
                 <div class="alert alert-primary alert-dismissible mt-3" role="alert">
                     {{ session('message') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -45,6 +45,10 @@
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" type="button" role="tab" aria-controls="image" aria-selected="false">Image</button>
+                                </li>
+
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color" type="button" role="tab" aria-controls="color" aria-selected="false">Colors</button>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -154,7 +158,7 @@
                                         <input type="file" class="form-control"  name="image[]" multiple placeholder="Choose image" id="image">
 
                                     </div>
-                                    {{--<livewire:admin.product-image.image: id="15" >--}}
+
                                     <div class="">
                                         @if($products->productImages)
                                            <div class="row">
@@ -174,11 +178,88 @@
                                     </div>
 
                                 </div>
-                                <div class="d-grid gap-2 col-6 mx-auto">
-                                    <button type="submit" class="btn btn-outline-primary btn-sm float-end btn-rounded mt-3"> Update</button>
-                                </div>
-                            </form>
-                        </div>
+
+
+                                {{--Color--}}
+                                <div class="tab-pane fade border p-3" id="color" role="tabpanel" aria-labelledby="color-tab">
+                                    <h3>Add Product Color</h3>
+                                    <label for=""><b>Select Color</b></label>
+                                    <hr>
+                                    <div class="row ">
+                                        @forelse($colors as $colorItem)
+                                            <div class="col-md-3">
+                                                <div class="p-2 border mb-3">
+
+
+                                                    Color:  <input type="checkbox" class="form-check-input"  name="colors[{{$colorItem->id}}]" multiple  id="color" value="{{$colorItem->id}}" >
+                                                    @if($colorItem->name == 'white' or $colorItem->name =='White')
+                                                        <b style="color: #0f0f0f">{{$colorItem->name}}</b>
+                                                    @else
+                                                        <b style="color: {{$colorItem->code}}">{{$colorItem->name}}</b>
+                                                    @endif
+
+                                                    <br>
+                                                    Quantity: <input type="number" name="Color_quantity[{{$colorItem->id}}]"  style="width: 70px;border: 1px solid">
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-md-12">
+                                                <h2>No colors Found</h2>
+                                            </div>
+
+                                        @endforelse
+                                    </div>
+
+
+<livewire:admin.productcolor.procolor-update :col_id="$products->id"/>
+{{--    @if($products->ProductColor->count() > 0)
+        <table class="table table-bordered table-sm ">
+            <thead>
+            <tr>
+                <th>Color Name</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+       @foreach($products->ProductColor as $prodColor)
+           <tr class="prod-color-tr">
+               <td>
+                   @if($prodColor->color->name == 'white' or $prodColor->color->name == 'White')
+                       <span class="badge rounded-pill " style="background-color: {{$prodColor->color->code}};color: #0f0f0f">{{$prodColor->color->name}}</span>
+                   @else
+                       <span class="badge rounded-pill text-white" style="background-color: {{$prodColor->color->code}}">{{$prodColor->color->name}}</span>
+
+                   @endif
+               </td>
+               <td>
+                   <div class="input-group mb-3" style="width: 150px">
+                       <input type="text" wire:modal="ColorQuantity"
+                              value="{{$prodColor->Color_quantity}}"
+                              class="ProductColorQuantity form-control form-control-sm">
+                       <button wire:click.prevent="ProductColorUpdate({{$prodColor->id}})"
+                          type="button" value="{{$prodColor->id}}"
+                          class="ProductColorUpdate btn btn-primary btn-sm text-white">Update</button>
+                   </div></td>
+               <td>
+                   <button type="button" wire:click.prevent="ProductColorDelete({{$prodColor->id}})" value="{{$prodColor->id}}" class="ProductColorDelete btn btn-danger btn-sm text-white">Delete</button>
+               </td>
+           </tr>
+       @endforeach
+       </tbody>
+   </table>
+       @else
+        <h1>no Selected Color</h1>
+       @endif--}}
+   </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button type="submit" class="btn btn-outline-primary btn-sm float-end btn-rounded mt-3"> Update</button>
+            </div>
+        </div>
+        </form>
+
+    </div>
                         <!-- /Account -->
                     </div>
                 </div>
@@ -191,7 +272,7 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+{{--    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <script type="text/javascript">
 
@@ -213,7 +294,42 @@
 
         });
 
-    </script>
+    </script>--}}
 @endsection
+{{--@section('scripts')
+    <script>
+        $(document).ready(function (){
+           $(document).on('click','.ProductColorUpdate',function (){
+               $.ajaxSetup({
+                   headers: {
+                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                   }
+               });
 
+               var product_id="{{$products->id}}";
+              var prod_color_id =$(this).val();
+              var qty =$(this).closest('.prod-color-tr').find('.ProductColorQuantity').val();
+
+             // alert(prod_color_id);
+               if (qty <=0){
+                   alert('Quantity is required');
+                   return false;
+               }
+               var data={
+                   'product_id':product_id,
+                   'prod_color_id':prod_color_id,
+                   'qty':qty
+               };
+               $.ajax({
+                   type:"method",
+                   url:"/back/product/"+prod_color_id,
+                   data:data,
+                   success:function (response){
+                       alert(response.message)
+                   }
+               })
+           });
+        });
+    </script>
+@endsection--}}
 

@@ -71,9 +71,18 @@
                                                     <input class="form-control" type="checkbox" value="" id="status" />
 
                                                 </div>--}}
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="status" class="form-label">Status</label><br>
-                                                    <input type="checkbox" name="status" id="status" {{$category->status ==1 ?'checked' : '' }} >
+                                                <div class="mb-3 col-md-6 row">
+                                                    <div class="form-check col-md-3">
+                                                        <label for="status" class="form-label">Status</label>
+                                                        <input type="checkbox" name="status" id="status" class="form-check"
+                                                               style="width: 30px;height: 30px"
+                                                            {{$category->status ==1 ?'checked' : '' }}>
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="order" class="form-label">Order</label>
+                                                        <input type="number" name="order" id="order" class="form-control" value="{{$category->order}}">
+                                                        @error('order') <smal class="text-danger">{{$message}}</smal> @enderror
+                                                    </div>
                                                 </div>
 
                                                 <div class="mb-3 col-md-6">
