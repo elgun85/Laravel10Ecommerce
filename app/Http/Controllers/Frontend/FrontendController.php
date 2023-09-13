@@ -29,25 +29,47 @@ class FrontendController extends Controller
         $cat=Category::where('slug',$category_slug)->first();
         if ($cat)
         {
-            $products=$cat->product()->get();
+           // $products=$cat->product()->get();
 
         }else{
             return redirect()->back();
         }
 
-        return view('frontend.product',compact('kat','products','cat'));
+        return view('frontend.product',compact('kat','cat'));
 
     }
 
-    public function product_view($cat_slug,$prod_name)
+    public function product_view($cat_slug,$prod_slug)
     {
-      //  return 'product_view';
-     //  $categories=Category::where('status',0)->paginate(8);
+        $kat=Category::where('status',0)->paginate(8);
+//return $prod_slug;
+        $cat=Category::where('slug',$cat_slug)->first();
+        if ($cat)
+        {
+        $product=$cat->product()->where('name',$prod_slug)->where('status',0)->first();
+            if ($product)
+            {
+                return view('frontend.productView',compact('kat','cat','product'));
+            }
+            else{
+                return redirect()->back();
+            }
+        }else{
+            return redirect()->back();
+        }
+
+
     }
 
-/*    public function category()
+    public function wishlist()
+        {
+            $kat=Category::where('status',0)->paginate(8);
+        return    view('frontend.wishlist',compact('kat'));
+        }
+
+    public function testpage()
     {
-        $categories=Category::where('status',0)->get();
-        return view('')
-    }*/
+
+      return  view('frontend.test');
+    }
 }

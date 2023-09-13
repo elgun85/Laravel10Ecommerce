@@ -22,4 +22,9 @@ class Brand extends Model
     {
         return $this->belongsTo(Category::class,'category_id','id');
     }
+
+    public function prod()
+    {
+        return $this->hasMany(Product::class,'brand','name')->where('status',0);
+    }
 }

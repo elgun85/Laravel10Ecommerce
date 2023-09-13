@@ -33,16 +33,21 @@ Auth::routes();
 
 
 
-/*Route::get('/', function () {
-    return view('frontend.index');
-});*/
+/*Route::get('/elgun', function () {
+    return view('frontend.test');
+})->name('elgun');*/
 
+Route::middleware(['auth'])->group(function ()
+{
 Route::get('/', [FrontendController::class, 'index'])->name('homepage');
+Route::get('/testpage', [FrontendController::class, 'testpage'])->name('testpage');
+Route::get('/wishlist', [FrontendController::class, 'wishlist'])->name('wishlist');
+
 Route::get('/{category_slug}', [FrontendController::class, 'product'])->name('product');
 Route::get('/cat/{cat_slug}/{prod_view}', [FrontendController::class, 'product_view'])->name('product_view');
 /*Route::get('/category', [FrontendController::class, 'category'])->name('category');*/
 
-
+});
                                 /*Backend*/
 
 
