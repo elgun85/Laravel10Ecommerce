@@ -12,6 +12,7 @@ class Wishlist extends Component
     public function wistlistdelete($id)
     {
         $whishlist=\App\Models\Wishlist::where('user_id',auth()->user()->id)->where('id',$id)->delete();
+        $this->emit('wishlistAddedUpdated'); //wishlistde siyahidan silende yuxarisa wishlist ceminden avtomatik update elemek  ucun
         $this->dispatchBrowserEvent('message',
             [
                 'text'=>'Wishlist deleted ',

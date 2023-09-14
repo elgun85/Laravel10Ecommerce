@@ -28,7 +28,7 @@ use App\Http\Controllers\Admin\SliderController;
 
 Auth::routes();
 
-//Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 
@@ -37,17 +37,20 @@ Auth::routes();
     return view('frontend.test');
 })->name('elgun');*/
 
+
+Route::get('/', [FrontendController::class, 'index'])->name('homepage');
 Route::middleware(['auth'])->group(function ()
 {
-Route::get('/', [FrontendController::class, 'index'])->name('homepage');
-Route::get('/testpage', [FrontendController::class, 'testpage'])->name('testpage');
-Route::get('/wishlist', [FrontendController::class, 'wishlist'])->name('wishlist');
+    Route::get('/wishlist', [FrontendController::class, 'wishlist'])->name('wishlist');
+    Route::get('/testpage', [FrontendController::class, 'testpage'])->name('testpage');
+
+
+});
 
 Route::get('/{category_slug}', [FrontendController::class, 'product'])->name('product');
 Route::get('/cat/{cat_slug}/{prod_view}', [FrontendController::class, 'product_view'])->name('product_view');
-/*Route::get('/category', [FrontendController::class, 'category'])->name('category');*/
 
-});
+
                                 /*Backend*/
 
 

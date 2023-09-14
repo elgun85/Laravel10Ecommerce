@@ -22,7 +22,6 @@ public function addWishList($product_id)
    {
        if (Wishlist::where('user_id',Auth::user()->id)->where('product_id',$product_id)->exists())
        {
-        //   session()->flash('error','Already added to Wishlist');
            $this->dispatchBrowserEvent('message',
                [
                    'text'=>'Already added to Wishlist',
@@ -37,7 +36,12 @@ public function addWishList($product_id)
                'user_id'=>Auth::user()->id,
                'product_id'=>$product_id
            ]);
-        //  session()->flash('message','Wishlist added succecfully');
+           $this->emit('wishlistAddedUpdated'); //wishlistde siyahidan silende yuxarisa wishlist ceminden avtomatik update elemek  ucun
+
+           //wishlistde siyahidan silende ve ya add edende yuxarida wishlist ceminden avtomatik silmek ucun || wishlistAddedUpdated wishlist showda ->delete() sonra yaz $this->emit('wishlistAddedUpdated');
+         //  protected $listeners = ['wishlistAddedUpdated' => 'checkWishlistCount'];
+
+
            $this->dispatchBrowserEvent('message',
                [
                    'text'=>'Wishlist added succecfully',
@@ -48,7 +52,6 @@ public function addWishList($product_id)
 
 
    }else{
-    //   session()->flash('error','Please Login to contunie');
        $this->dispatchBrowserEvent('message',
        [
            'text'=>'Please Login to contunie',
