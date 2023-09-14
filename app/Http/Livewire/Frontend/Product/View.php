@@ -9,7 +9,23 @@ use Livewire\Component;
 
 class View extends Component
 {
-    public $cat,$product,$prodColorSelectQuantity,$calorid;
+    public $cat,$product,$prodColorSelectQuantity,$calorid,$quantityCount=1;
+
+    public function decrementQuantity()
+    {
+        if ($this->quantityCount > 1)
+        {
+            $this->quantityCount --;
+        }
+    }
+
+    public function incrementQuantity()
+    {
+        if ($this->quantityCount < 10)
+        {
+            $this->quantityCount ++;
+        }
+    }
 
     public function mount($cat,$product)
     {
